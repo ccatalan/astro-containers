@@ -1,0 +1,5 @@
+#include "Pierre/POP/sfit.i"
+
+f=open("index.table");
+a=rdline(f,100);
+ta=split2words(a,sep=" ");

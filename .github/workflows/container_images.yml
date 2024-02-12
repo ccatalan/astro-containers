@@ -1,0 +1,61 @@
+---
+name: container-images
+on:
+  push:
+
+jobs:
+  push_to_reg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo locale-gen en_US.UTF-8
+          sudo dpkg-reconfigure locales
+          sudo python -m pip install --upgrade pip
+          sudo pip install tox
+          sudo apt install software-properties-common build-essential findutils -y
+      - name: Build the starlight image
+        run: |
+          cd starlight
+          docker build -t astro-containers/starlight .
+          cd ..
+      - name: Build the steckmap image
+        run: |
+          cd steckmap
+          docker build -t astro-containers/steckmap .
+          cd ..
+      - name: Push starlight image to GitHub container Registry
+        run: |
+          #
+          # GitHub container registry
+          #
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/starlight
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag astro-containers/starlight $IMAGE_ID:$VERSION
+          # Login in GH container registry
+          echo "${{ secrets.GITHUB_TOKEN }}" | \
+            docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          docker push $IMAGE_ID:$VERSION
+      - name: Push steckmap image to GitHub container Registry
+        run: |
+          #
+          # GitHub container registry
+          #
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/steckmap
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          [ "$VERSION" == "master" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag astro-containers/steckmap $IMAGE_ID:$VERSION
+          # Login in GH container registry
+          echo "${{ secrets.GITHUB_TOKEN }}" | \
+            docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          docker push $IMAGE_ID:$VERSION

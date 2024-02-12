@@ -1,0 +1,10 @@
+func WSLpsnup(file){
+  /*DOCUMENT
+    handles WSL-like plots: creates a ps with 1 WSL plots per page, to hepl browsing through, using latex
+  */
+  
+  f=open("crap.tex",w);
+  write,"truc";
+  close,f;
+};
+  

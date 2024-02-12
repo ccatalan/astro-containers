@@ -1,0 +1,1 @@
+ crapf=open("NGC4621-1.res.asc");write,crapf,dimsof(wave),format="\n";write,crapf,wave;close,crapf;

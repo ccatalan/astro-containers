@@ -1,0 +1,16 @@
+\pagestyle{empty}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{psfrag}
+\begin{document}
+\thispagestyle{empty}
+\begin{figure}
+\psfrag{Mstarp}[][][2]{{${{\rm M}_{\star} ({\rm M}_{\odot}})$}} 
+\psfrag{Msunp}[][][2]{${\rm M}_{\odot}$}
+\psfrag{SFRp}[][][1.4]{SFR $({\rm M}_{\odot}/{\rm{yr}})$}
+\includegraphics{SFR.ps}
+\end{figure}
+\end{document}
