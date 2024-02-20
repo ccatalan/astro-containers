@@ -43,7 +43,7 @@ podman run --rm -it \
 
 ```
 # Get the image from quay or github cr
-podman pull quay.io/ccatalan/astro-containers-starlight:latest
+podman pull ghcr.io/ccatalan/astro-containers/starlight:main
 
 # Create the local folders we will mount in the container image
 mkdir -p ./spectrum/
@@ -66,5 +66,5 @@ podman run --rm -it \
     -v ./mask/:/home/starlight/mask/:z \
     -v ./out/:/home/starlight/out/:z \
     -v ./StCv04.C11.arp220.config:/home/starlight/STARLIGHTv04/StCv04.C11.arp220.config:z \
-    quay.io/ccatalan/astro-containers-starlight \
+    ghcr.io/ccatalan/astro-containers/starlight:main \
         < grid_example.in
