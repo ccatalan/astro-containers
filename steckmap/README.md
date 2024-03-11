@@ -106,7 +106,7 @@ other sources all inside the container.
 
 ```
 # Get the image from quay or github cr
-podman pull quay.io/ccatalan/astro-containers-steckmap:latest
+podman pull ghcr.io/ccatalan/astro-containers/steckmap:main
 ```
 
 ## OLD - DEPRECATED without the X11 server:
@@ -124,4 +124,3 @@ podman run --rm -it \
     localhost/astro-containers/steckmap \
         -batch /home/steckmap/input/fix_kinematic_BC03_Calzetti_IRAS00188_redshift.i
 ```
-
